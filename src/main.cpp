@@ -283,6 +283,21 @@ void loop() {
     }
 
     if (isArmed) {
+      // MOTION SENSOR
+      if (val == HIGH) {
+        if (motionState == false) {
+          Serial.println("Motion detected!");
+          ledcWriteTone(0, freq);
+          motionState = true;
+        }
+      } else {
+        if (motionState == true) {
+          Serial.println("Motion ended");
+          motionState = false;
+        }
+      }
+
+      // GLASSBREAK SENSOR
       for (int i = 0; i < SAMPLES; i++) {
         newTime = micros() - oldTime;
         oldTime = newTime;
